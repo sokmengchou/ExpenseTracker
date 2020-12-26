@@ -1,0 +1,18 @@
+export interface NavigationInterface {
+    addListener: any,
+    canGoBack: any,
+    dangerouslyGetParent: any,
+    dangerouslyGetState: any,
+    dispatch: any,
+    goBack: any,
+    isFocused: any,
+    navigate: any,
+    pop: any,
+    popToTop: any,
+    push: any,
+    removeListener: any,
+    replace: any,
+    reset: any,
+    setOptions: any,
+    setParams: any,
+}

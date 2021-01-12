@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, SafeAreaView, TextInput, ImageBackground, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
+import { ActivityIndicator, View, Text, TouchableOpacity, SafeAreaView, TextInput, ImageBackground, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 import { styles } from './AddExpenseStyle';
 import _styles from '../../../_styles';
 import modules from '../../../modules';
@@ -10,21 +10,34 @@ import ModalDate from '../../../components/modal/ModalDate';
 import { _formatShortDate } from '../../../services/formatdate.service';
 import ModalCategory from '../../../components/modal/ModalCategory';
 import { CATEGORY, TYPE_TRANSACTION } from '../../../dummy';
+import { RoutesNavigationInterface } from '../../../interface/index'
 import RadioButtonRN from 'radio-buttons-react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
 interface Props {
-    progress: boolean
-
+    progress: boolean,
+    categoryLoading: boolean
+    categoryDocs: Array<any>
+    onCategory: () => void
+    route: RoutesNavigationInterface
 }
 
-const AddExpenseScreen = ({ progress }: Props) => {
+const AddExpenseScreen = ({ progress, categoryLoading, onCategory, route, categoryDocs }: Props) => {
     const [amount, setAmount] = React.useState('')
     const [date, setDate] = React.useState("")
     const [modalDate, setModalDate] = React.useState(false)
     const [modalCategory, setModalCategory] = React.useState(false)
     const [note, setNote] = React.useState('')
     const [category, setCategory] = React.useState<any>(null)
+    const [selectedCategory, setSelectedCategory] = React.useState(categoryDocs[0])
+
+    React.useEffect(() => {
+        const selectedCategory: any = route.params?.selectedCategory || {}
+        setSelectedCategory(selectedCategory)
+        console.log('selectedCategory :>> ', selectedCategory);
+        return () => { }
+    }, [route.params])
 
     return (
         <ImageBackground source={require("../../../../assets/image/back2.png")} style={styles.container}>
@@ -52,15 +65,6 @@ const AddExpenseScreen = ({ progress }: Props) => {
                         />
                     </View>
                 </View>
-                {/* <View style={styles.incomeExpenseContainer}>
-                    <TouchableOpacity style={styles.income}>
-                        <Text style={{ ...fontBold }}>Income</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.expense}>
-                        <Text style={{ ...fontBold }}>Expense</Text>
-
-                    </TouchableOpacity>
-                </View> */}
 
                 <RadioButtonRN
                     data={TYPE_TRANSACTION}
@@ -74,30 +78,34 @@ const AddExpenseScreen = ({ progress }: Props) => {
                 />
 
                 <View style={{ flex: 1 }} />
-                <TouchableOpacity onPress={() => setModalCategory(!modalCategory)} style={styles.category}>
+                {
+                    categoryLoading ? <ActivityIndicator />
+                        : null
+                }
+                <TouchableOpacity onPress={onCategory} style={styles.category}>
                     <View style={styles.icon}>
-                        <FastImage style={{ height: 20, width: 20 }} source={require("../../../../assets/image/beers.png")} />
+                        <FastImage style={styles.img} source={require("../../../../assets/image/beers.png")} />
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
-                        <Text style={{ ...fontBold }}>{category?.text ? category?.text : "Category"}</Text>
+                    <View style={styles.txt}>
+                        <Text style={{ ...fontBold, textAlign:'center'}}>{selectedCategory.name?selectedCategory.name:"Category"}</Text>
                     </View>
-                    <Icon style={{ fontSize: modules.FONT_H4 }} name={"keyboard-arrow-down"} />
+                    <Icon style={{ fontSize: modules.FONT_H4 }} name={"keyboard-arrow-right"} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setModalDate(!modalDate)} style={styles.category}>
                     <View style={styles.icon}>
-                        <FastImage style={{ height: 20, width: 20 }} source={require("../../../../assets/image/calendar.png")} />
+                        <FastImage style={styles.img} source={require("../../../../assets/image/calendar.png")} />
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={styles.txt}>
                         <Text style={{ ...fontBold }}>{(date) ? _formatShortDate(date) : "Date"}</Text>
                     </View>
                     <Icon style={{ fontSize: modules.FONT_H4 }} name={"keyboard-arrow-down"} />
                 </TouchableOpacity>
                 <View style={styles.category}>
                     <View style={styles.icon}>
-                        <FastImage style={{ height: 20, width: 20 }} source={require("../../../../assets/image/sticky-note.png")} />
+                        <FastImage style={styles.img} source={require("../../../../assets/image/sticky-note.png")} />
                     </View>
 
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={styles.txt}>
                         <TextInput
                             style={{ textAlign: 'center', ...fontBold }}
                             placeholder={"Please enter note here"}
@@ -118,11 +126,11 @@ const AddExpenseScreen = ({ progress }: Props) => {
                 onDateChange={setDate}
             />
 
-            <ModalCategory
+            {/* <ModalCategory
                 onBackdropPress={() => setModalCategory(!modalCategory)}
                 onPress={(item) => { _seleteCategory(item.value, setModalCategory, setCategory) }}
                 isVisible={modalCategory}
-                data={CATEGORY} />
+                data={categoryDocs} /> */}
         </ImageBackground >
 
     );

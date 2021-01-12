@@ -33,7 +33,7 @@ const LoginScreen = ({ progress, loginEmailPassword, onCreateAccount, onGoogle, 
                 <TextInputWithoutIcon
                     style={{ ..._styles.shadowSmall }}
                     label={"Email or Username"}
-                    placeholder={"Please enter Email or Username"}
+                    placeholder={"Please enter your email"}
                     onChangeText={text => setEmail(text)}
                     onSubmitEditing={() => Keyboard.dismiss()}
                 />
@@ -60,7 +60,7 @@ const LoginScreen = ({ progress, loginEmailPassword, onCreateAccount, onGoogle, 
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={onFacebook} style={{ flex: 1 }}>
-                        <View style={[styles.buttonLoginWithSocialMedia, { backgroundColor: '#4267B2' }]}>
+                        <View style={[styles.buttonLoginWithSocialMedia, { backgroundColor: '#526DA4' }]}>
                             <FastImage source={require("../../../../assets/image/facebook-logo.png")} style={styles.smallLogo} />
                         </View>
                     </TouchableOpacity>
@@ -73,7 +73,6 @@ const LoginScreen = ({ progress, loginEmailPassword, onCreateAccount, onGoogle, 
 
                 </View>
             </KeyboardAvoidingView>
-            {/* <View style={{ flex: 1 }} /> */}
         </View>
     );
 }

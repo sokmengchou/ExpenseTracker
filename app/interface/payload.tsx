@@ -50,6 +50,7 @@ export interface PayloadLogOut {
 export interface PayloadCreateUser {
     firstName: string,
     lastName: string,
+    selectedCurrency: any,
     gender: any,
     dateOfBirth: any,
     account: UserCanActive,
@@ -82,5 +83,43 @@ export interface FetchDataApiAction {
     payload: PayloadFetchDataApi
 }
 export interface PayloadFetchDataApi {
-    
+
+}
+
+export interface EditProfileAction {
+    type: any,
+    payload: PayloadEditProfile
+}
+export interface PayloadEditProfile {
+    account: UserInterface,
+    navigation: NavigationInterface,
+    firstName: string,
+    lastName: string,
+    email: string,
+    gender: any,
+    dateOfBirth: Date
+}
+
+export interface FetchCategoryAction {
+    type: any,
+    payload: PayloadFetchCategory
+}
+export interface PayloadFetchCategory {
+    refreshToken: string
+}
+
+export interface FetchCurrencyAction {
+    type: any,
+    payload: PayloadFetchCurrency
+}
+export interface PayloadFetchCurrency {
+    refreshToken: string
+}
+export interface SelectedCurrencyAction {
+    type: any,
+    payload: PayloadSelectedCurrency
+}
+export interface PayloadSelectedCurrency {
+    navigation: NavigationInterface,
+    selectedCurrency: any
 }

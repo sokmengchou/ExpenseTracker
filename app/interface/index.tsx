@@ -20,6 +20,7 @@ export interface UserInterface {
     email: string,
     lastName: string,
     firstName: string,
+    selectedCurrency: any,
     gender: any,
     dateOfBirth: Date,
     createdDate: Date,
@@ -27,4 +28,9 @@ export interface UserInterface {
     status: any,
     createdByKey: string
     fullName: string
+}
+export interface RoutesNavigationInterface {
+    key: string,
+    name: string
+    params: any
 }

@@ -32,7 +32,7 @@ const ModalGender = (props: Props) => {
         >
             <View style={[styles.containModal, _styles.cardShadow]}>
 
-                <View style={styles.ping} />
+                {/* <View style={styles.ping} /> */}
                 {props.data?props.data.map((item:any) => {
                     return (
                         <TouchableOpacity onPress={() => { props.onPress(item) }}

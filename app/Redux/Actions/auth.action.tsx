@@ -1,4 +1,4 @@
-import { PayloadCanActive, PayloadCreateUser, PayloadLoginEmailPassword, PayloadOnFacebook, PayloadOnGoogle, PayloadRegisterEmailPassword, PayloadLogOut } from "../../interface/payload";
+import { PayloadCanActive, PayloadCreateUser, PayloadLoginEmailPassword, PayloadOnFacebook, PayloadOnGoogle, PayloadRegisterEmailPassword, PayloadLogOut, PayloadEditProfile, PayloadFetchCategory } from "../../interface/payload";
 import Types from "../Types";
 
 export function canActive(payload: PayloadCanActive) {
@@ -46,6 +46,20 @@ export function onGoogle(payload: PayloadOnGoogle) {
 export function onCreateUser(payload: PayloadCreateUser) {
   return {
     type: Types.CREATE_USER,
+    payload: payload
+  }
+}
+
+export function onEditProfile(payload: PayloadEditProfile) {
+  return {
+    type: Types.ON_EDIT_PROFILE,
+    payload: payload
+  }
+}
+
+export function onFetchCategory(payload: PayloadFetchCategory) {
+  return {
+    type: Types.ON_FETCH_CATEGORY,
     payload: payload
   }
 }

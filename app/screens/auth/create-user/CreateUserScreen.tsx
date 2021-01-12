@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, SafeAreaView, Keyboard } from 'react-native';
+import { View, Text, SafeAreaView, Keyboard, Alert } from 'react-native';
 import { styles } from './CreateUserStyle';
 import _styles from '../../../_styles';
 import MIcon from '../../../components/MIcon';
@@ -19,10 +19,13 @@ import ModalCurrency from '../../../components/modal/ModalCurrency';
 
 interface Props {
     progress: boolean
-    onCreateUser: (firstName: string, lastName: string, gender: any, dateOfBirth: any) => void
+    onCreateUser: (firstName: string, lastName: string, selectedCurrency: any, gender: any, dateOfBirth: any) => void
+    onCurrency: () => void,
+    currencyDocs: Array<any>
+    selectedCurrency: any
 }
 
-const CreateUserScreen = ({ progress, onCreateUser }: Props) => {
+const CreateUserScreen = ({ progress, onCreateUser, onCurrency, currencyDocs, selectedCurrency }: Props) => {
     const [firstName, setfirstName] = React.useState('')
     const [lastName, setlastName] = React.useState('')
     const [gender, setGender] = React.useState<any>()
@@ -31,6 +34,8 @@ const CreateUserScreen = ({ progress, onCreateUser }: Props) => {
     const [dateOfBirth, setdateOfBirth] = React.useState(new Date())
     const [modalCurrency, setModalCurrency] = React.useState(false)
     const [currency, setCurrency] = React.useState<any>()
+    // const [selectedCurrency, setSelectedCurrency] = React.useState(currencyDocs[0])
+
 
     return (
         <SafeAreaView style={{ backgroundColor: modules.WHITE, flex: 1 }}>
@@ -55,15 +60,14 @@ const CreateUserScreen = ({ progress, onCreateUser }: Props) => {
                         placeholder={"Please enter your last-name"}
                         onChangeText={(txt) => setlastName(txt)}
                         onSubmitEditing={() => { Keyboard.dismiss() }}
-
                     />
                 </View>
             </View>
             <TextInputWithIcon
                 style={{ ..._styles.shadowSmall }}
-                onPress={() => setModalCurrency(!modalCurrency)}
-                iconName={"keyboard-arrow-down"}
-                name={currency ? currency.name : 'Currency'}
+                onPress={onCurrency}
+                iconName={"keyboard-arrow-right"}
+                name={selectedCurrency?.name ? selectedCurrency?.name : "Select currency"}
                 label={"Currency *"}
                 placeholder="Select currency"
             />
@@ -89,7 +93,7 @@ const CreateUserScreen = ({ progress, onCreateUser }: Props) => {
                 style={{ paddingTop: modules.PADDING / 2 }}
                 text={"Go"}
                 progress={progress}
-                onPress={() => onCreateUser(firstName, lastName, gender, dateOfBirth)}
+                onPress={() => onCreateUser(firstName, lastName, selectedCurrency, gender, dateOfBirth)}
 
             />
 
@@ -100,12 +104,12 @@ const CreateUserScreen = ({ progress, onCreateUser }: Props) => {
                 onDateChange={setdateOfBirth}
             />
 
-            <ModalCurrency
+            {/* <ModalCurrency
                 onBackdropPress={() => setModalCurrency(!currency)}
                 onPress={(item) => { _selectCurrency(item.name, setModalCurrency, setCurrency) }}
                 isVisible={modalGender}
                 data={CURRENCY}
-            />
+            /> */}
 
             <ModalGender
                 onBackdropPress={() => setModalGender(!modalGender)}

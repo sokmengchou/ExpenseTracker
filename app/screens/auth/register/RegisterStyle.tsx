@@ -6,24 +6,22 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:modules.WHITE
+        backgroundColor: modules.WHITE
     },
-    buttonLoginWithSocialMedia:{
-        marginHorizontal: modules.PADDING/2,
+    buttonLoginWithSocialMedia: {
+        marginHorizontal: modules.PADDING / 2,
         alignItems: 'center',
         borderRadius: modules.RADIUS,
-        height:modules.VIEW_PORT_WIDTH/10,
-        justifyContent:'center',
-        backgroundColor:'red',
-        
+        height: modules.VIEW_PORT_WIDTH / 10,
+        justifyContent: 'center',
+        backgroundColor: 'red',
+
     },
     img: {
-        width: modules.VIEW_PORT_WIDTH / 3,
-        height: modules.VIEW_PORT_WIDTH / 3,
-        
+        width: modules.VIEW_PORT_WIDTH,
+        height: modules.VIEW_PORT_WIDTH / 1.5,
     },
-    imgContainer:{
-        alignItems:'center',
-        padding:modules.PADDING
+    imgContainer: {
+        padding: modules.PADDING,
     },
-})
+}) 

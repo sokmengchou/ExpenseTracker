@@ -1,5 +1,5 @@
 import { call, put, takeEvery, takeLatest, take } from "redux-saga/effects";
-import { CanActiveAction, CreateUserAction, FetchDataAction, LoginEmailPasswordAction, LogOutAction, OnFacebookAction, OnGoogleAction, RegisterEmailPasswordAction } from "../../interface/payload";
+import { CanActiveAction, CreateUserAction, EditProfileAction, FetchDataAction, LoginEmailPasswordAction, LogOutAction, OnFacebookAction, OnGoogleAction, RegisterEmailPasswordAction } from "../../interface/payload";
 import { userRef } from "../../services/data.service";
 import { pushToArray, pushToObject, StatusObject } from "../../services/mapping.service";
 import { getUserFromAsyncStorage, setUserToAsyncStorage } from "../../services/storage.service";
@@ -16,17 +16,22 @@ function* canActive(action: CanActiveAction) {
     try {
         while (true) {
 
+
+
             const result = yield take(channel)
+
             if (!result.user) {
                 yield param.navigation.reset({
                     index: 0,
                     routes: [{ name: "LOGIN" }]
                 })
             } else {
+                const refresh = yield auth().currentUser
+                const refreshToken = yield refresh?.getIdToken().then((refreshToken: any) => { return refreshToken })
                 const hasUser = yield userRef().doc(result.user.uid).get().then((item) => { return item }).catch(() => { return null })
                 if (hasUser.exists) {
                     const account = pushToObject(hasUser)
-                    yield put({ type: Types.CAN_ACTIVE_SUCCESS, account })
+                    yield put({ type: Types.CAN_ACTIVE_SUCCESS, account, refreshToken })
                     yield param.navigation.reset({
                         index: 0,
                         routes: [{ name: "APP_TAB" }]
@@ -34,7 +39,7 @@ function* canActive(action: CanActiveAction) {
 
                 } else {
                     const account = result.user
-                    yield put({ type: Types.CAN_ACTIVE_SUCCESS, account })
+                    yield put({ type: Types.CAN_ACTIVE_SUCCESS, account, refreshToken })
                     yield param.navigation.reset({
                         index: 0,
                         routes: [{ name: "CREATE_USER" }]
@@ -130,6 +135,7 @@ function* createUser(action: CreateUserAction) {
             email: param.account.email,
             lastName: param.lastName,
             firstName: param.firstName,
+            selectedCurrency: param.selectedCurrency,
             fullName: param.lastName + ' ' + param.firstName,
             gender: param.gender,
             dateOfBirth: param.dateOfBirth,
@@ -141,7 +147,6 @@ function* createUser(action: CreateUserAction) {
         console.log('doc :>> ', doc);
         const res = yield userRef().doc(doc.key).set(doc).then(() => { return true }).catch(() => { return false })
         if (res) {
-            console.log('res :>> ', res);
             yield put({ type: Types.CREATE_USER_SUCCESS, account: doc })
             yield param.navigation.reset({
                 index: 0,
@@ -153,6 +158,39 @@ function* createUser(action: CreateUserAction) {
     }
 }
 
+function* onEditProfile(action: EditProfileAction) {
+    const param = action.payload
+    try {
+        const doc: UserInterface = {
+            key: param.account.key,
+            email: param.account.email,
+            lastName: param.lastName,
+            firstName: param.firstName,
+            fullName: param.lastName + ' ' + param.firstName,
+            gender: param.gender,
+            dateOfBirth: param.dateOfBirth,
+            createdDate: new Date,
+            pageKey: Number(new Date),
+            status: StatusObject().ACTIVE,
+            createdByKey: param.account.key,
+        }
+        const res = yield userRef()
+            .doc(doc.key)
+            .update(doc)
+            .then(() => { return true })
+            .catch((err) => { return false })
+        if (res) {
+            yield put({ type: Types.ON_EDIT_PROFILE_SUCCESS, account: doc })
+            yield param.navigation.reset({
+                index: 0,
+                routes: [{ name: "SETTING" }]
+            })
+        }
+    } catch (err) {
+        yield put({ type: Types.ON_EDIT_PROFILE_ERROR })
+    }
+}
+
 export const AuthSaga = [
     takeLatest(Types.CAN_ACTIVE, canActive),
     takeLatest(Types.LOGIN_EMAIL_PASSWORD, loginEmailPassword),
@@ -161,5 +199,6 @@ export const AuthSaga = [
     takeLatest(Types.LOG_OUT, logOut),
     takeLatest(Types.ON_FACEBOOK, loginFacebook),
     takeLatest(Types.ON_GOOGLE, loginGoogle),
+    takeLatest(Types.ON_EDIT_PROFILE, onEditProfile)
 
 ]

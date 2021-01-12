@@ -4,6 +4,14 @@ import modules from "../../../modules";
 import _styles from "../../../_styles";
 
 export const styles = StyleSheet.create({
+    img: {
+        height: 20,
+        width: 20
+    },
+    txt: {
+        flex: 1,
+        alignItems: 'center',
+    },
     container: {
         flex: 1,
     },
@@ -23,8 +31,8 @@ export const styles = StyleSheet.create({
         backgroundColor: modules.WHITE,
         padding: modules.PADDING,
         overflow: 'hidden',
-        borderTopLeftRadius: modules.RADIUS*2,
-        borderBottomLeftRadius: modules.RADIUS*2,
+        borderTopLeftRadius: modules.RADIUS * 2,
+        borderBottomLeftRadius: modules.RADIUS * 2,
         borderWidth: 1,
         borderColor: modules.WHITE,
     },
@@ -32,8 +40,8 @@ export const styles = StyleSheet.create({
         ..._styles.flex1,
         borderWidth: 1,
         borderColor: modules.WHITE,
-        borderBottomRightRadius: modules.RADIUS*2,
-        borderTopRightRadius: modules.RADIUS*2,
+        borderBottomRightRadius: modules.RADIUS * 2,
+        borderTopRightRadius: modules.RADIUS * 2,
         overflow: 'hidden',
     },
     incomeExpenseContainer: {
@@ -43,13 +51,13 @@ export const styles = StyleSheet.create({
         paddingTop: modules.PADDING / 2
     },
     radioBtn: {
-        textAlign: 'center',
         ...fontBold
     },
     income: {
         flex: 1,
         padding: modules.PADDING,
         borderRadius: modules.RADIUS * 2,
+        borderBottomEndRadius:modules.RADIUS*7,
         marginHorizontal: modules.PADDING / 2,
     },
     expense: {

@@ -4,16 +4,25 @@ import modules from "../../modules";
 import _styles from "../../_styles";
 
 export const styles = StyleSheet.create({
+    featureBtn:{
+        alignItems:'center',
+        flex:1
+    },
+    featureImage: {
+        height: 30,
+        width: 30,
+        marginBottom:modules.PADDING/2
+    },
     container: {
-        width:"100%",
-        height:"100%",
+        width: "100%",
+        height: "100%",
     },
     back: {
         position: 'absolute',
         // zIndex:-1
     },
     front: {
-        zIndex:1
+        zIndex: 1
         // flex:1
     },
     horizontal: {
@@ -44,17 +53,17 @@ export const styles = StyleSheet.create({
     },
     chart: {
         ..._styles.shadowSmall,
-        alignItems:'center',
+        alignItems: 'center',
     },
-    viewTransactionContainer:{
-        padding:modules.PADDING,
-        alignItems:'center',
+    viewTransactionContainer: {
+        padding: modules.PADDING,
+        alignItems: 'center',
         // backgroundColor: "rgba(255,255,255,0.75)",
-        backgroundColor:modules.WHITE,
-        borderRadius:modules.RADIUS*2,
-        marginHorizontal:modules.PADDING,
-        marginBottom:modules.PADDING,
-        // ..._styles.shadowSmall
+        backgroundColor: modules.WHITE,
+        borderRadius: modules.RADIUS * 2,
+        marginHorizontal: modules.PADDING,
+        marginBottom: modules.PADDING,
+        ..._styles.shadowSmall
     }
 
 })

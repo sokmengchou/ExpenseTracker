@@ -7,6 +7,7 @@ target 'ExpenseTracker' do
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   pod 'RNFBAuth', :path => '../node_modules/@react-native-firebase/auth'
   pod 'RNFBFirestore', :path => '../node_modules/@react-native-firebase/firestore'
+  pod 'GoogleSignIn', '~> 5.0.2'
   
   config = use_native_modules!
 

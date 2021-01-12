@@ -38,9 +38,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: modules.BLUE,
         borderRadius: modules.RADIUS,
-        height: modules.VIEW_PORT_WIDTH / 10,
-        width: modules.VIEW_PORT_WIDTH - (modules.PADDING * 2),
         justifyContent: 'center',
+        padding:modules.PADDING/2
     },
     text: {
         fontSize: modules.FONT_H5,

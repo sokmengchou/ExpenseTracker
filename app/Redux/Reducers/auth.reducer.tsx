@@ -5,7 +5,8 @@ const initialState = {
     uploading: false,
     account: null,
     confirmation: 0,
-    logo: ''
+    logo: '',
+    refreshToken:''
 
 }
 const AuthReducer = (state: any = initialState, action: any) => {
@@ -14,11 +15,11 @@ const AuthReducer = (state: any = initialState, action: any) => {
         case Types.CAN_ACTIVE:
             return { ...state, loading: true }
         case Types.CAN_ACTIVE_SUCCESS:
-            console.log('action.account :>> ', action.account);
-            return { ...state, account: action.account, loading: false }
+
+            return { ...state, account: action.account, loading: false,refreshToken:action.refreshToken }
         case Types.CAN_ACTIVE_ERROR:
             return { ...state, loading: false }
-            
+
 
         case Types.LOGIN_EMAIL_PASSWORD:
             return { ...state, progress: true }
@@ -65,6 +66,13 @@ const AuthReducer = (state: any = initialState, action: any) => {
         case Types.ON_GOOGLE_SUCCESS:
             return { ...state, progress: false }
         case Types.ON_GOOGLE_ERROR:
+            return { ...state, progress: false }
+
+        case Types.ON_EDIT_PROFILE:
+            return { ...state, progress: true }
+        case Types.ON_EDIT_PROFILE_SUCCESS:
+            return { ...state, progress: false, account: action.account }
+        case Types.ON_EDIT_PROFILE_ERROR:
             return { ...state, progress: false }
 
         default:

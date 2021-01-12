@@ -58,5 +58,6 @@ const styles = StyleSheet.create({
     },
     icon: {
         color: modules.BLACK,
+        fontSize:modules.FONT_H5
     }
 })

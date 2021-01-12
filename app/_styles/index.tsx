@@ -7,7 +7,7 @@ const _styles = StyleSheet.create({
 		alignItems: 'center',
 	  },
 	flex1: {
-		flex: 1
+		flex: 1,
 	  },
 	label: {
 		fontSize: modules.FONT_S,

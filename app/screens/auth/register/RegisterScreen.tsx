@@ -9,6 +9,7 @@ import PrimaryButton from '../../../components/PrimaryButton';
 import FastImage from 'react-native-fast-image';
 import CloseButton from '../../../components/CloseButton';
 import { ScrollView } from 'react-native-gesture-handler';
+import { fontBold } from '../../../../customs/customFont';
 
 interface Props {
     progress: boolean
@@ -24,13 +25,14 @@ const RegisterScreen = ({ progress, onRegister }: Props) => {
             <SafeAreaView />
             <CloseButton />
             <View style={styles.imgContainer}>
-                <FastImage style={styles.img} source={require("../../../../assets/image/add.png")} />
+                <Text style={{ ...fontBold, fontSize: modules.FONT_H3 }}>Register</Text>
+                <FastImage style={styles.img} source={require("../../../../assets/image/register.png")} />
             </View>
-            <KeyboardAvoidingView
-                enabled
-                behavior={Platform.OS == "ios" ? "padding" : "height"}
-                style={{ flex: 1, justifyContent: 'center' }}>
-                {/* <View style={{backgroundColor:'rgba(255,255,255,0.8)'}}> */}
+            <View style={{backgroundColor: "rgba(255,255,255,0.75)", flex:1, margin:modules.PADDING, borderRadius:modules.RADIUS*2}}>
+                <KeyboardAvoidingView
+                    enabled
+                    behavior={Platform.OS == "ios" ? "padding" : "height"}
+                    style={{ flex:1}}>
                     <TextInputWithoutIcon
                         style={{ ..._styles.shadowSmall }}
                         label={"Email and Username"}
@@ -58,9 +60,9 @@ const RegisterScreen = ({ progress, onRegister }: Props) => {
                         progress={progress}
                         onPress={() => onRegister(email, password)}
                     />
-                {/* </View> */}
-            </KeyboardAvoidingView>
-
+                </KeyboardAvoidingView>
+                {/* <View style={_styles.flex1}/> */}
+            </View>
         </View>
     );
 }

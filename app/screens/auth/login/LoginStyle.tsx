@@ -19,7 +19,8 @@ export const styles = StyleSheet.create({
     },
     newUserContainer: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width:modules.VIEW_PORT_WIDTH-modules.PADDING
     },
     socialBtn: {
         flexDirection: 'row',

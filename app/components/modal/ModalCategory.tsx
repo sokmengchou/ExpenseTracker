@@ -34,13 +34,14 @@ const ModalCategory = (props: Props) => {
 
                 <View style={styles.ping} />
                 {props.data?props.data.map((item:any) => {
+                    console.log('item :>> ', item);
                     return (
                         <TouchableOpacity onPress={() => { props.onPress(item) }}
                             style={[styles.phonenumberContainer, { justifyContent: 'center', marginBottom: 0, marginHorizontal: 0 }]}>
 
                             <View style={{ width: modules.VIEW_PORT_WIDTH / 3, flexDirection: 'row', alignItems: "center", flex:1 }}>
                                 <Text style={styles.inputName}>
-                                    {item.value.text}
+                                    {item.id}
                                 </Text>
                             </View>
                         </TouchableOpacity>

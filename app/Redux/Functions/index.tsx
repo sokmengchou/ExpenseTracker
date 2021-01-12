@@ -6,6 +6,7 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { Alert } from "react-native";
 import { GoogleSignin } from '@react-native-community/google-signin';
 import Axios from 'axios'
+GoogleSignin.configure();
 
 const db = firestore()
 export function getAuthChannel() {
@@ -30,19 +31,7 @@ export async function onLogin(action: LoginEmailPasswordAction) {
     return res
 }
 
-export async function fectDataApi(action: PayloadFetchDataApi) {
-    // const param = action.payload
-    // const res = await auth()
-    //     .signInWithEmailAndPassword(param.email, param.password)
-    //     .then((res) => {
-    //         return true
-    //     })
-    //     .catch(error => {
-    //         return false
 
-    //     });
-    // return res
-}
 
 export async function onFacebook(action: OnFacebookAction) {
     // Attempt login with permissions
@@ -116,10 +105,60 @@ export async function onCreateUser(action: CreateUserAction) {
 
 
 export async function getDataAPI() {
-const doc =await Axios.get('https://jsonplaceholder.typicode.com/posts').then((item)=>{
-    return item
-}).catch(()=>{
-    return null
-})
-return doc
+    const doc = await Axios.get('https://jsonplaceholder.typicode.com/posts').then((item) => {
+        return item
+    }).catch(() => {
+        return null
+    })
+    return doc
 }
+
+// export async function getTokenFb() {
+//     const doc = await Axios.get('https://jsonplaceholder.typicode.com/posts').then((item) => {
+//         return item
+//     }).catch(() => {
+//         return null
+//     })
+//     return doc
+// }
+
+export async function fectDataApi(token: string) {
+    const baseUrl = 'https://itstep-expense-tracker.herokuapp.com/api/transaction_types/2'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    const res = await Axios.get(baseUrl, config).then((item) => { return item }).catch((err) => { return null })
+    return res
+
+}
+
+export async function getCategory(token: string) {
+    const baseUrl = 'https://itstep-expense-tracker.herokuapp.com/api/transaction_types/2'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    const res = await Axios.get(baseUrl, config).then((item) => { return item }).catch((err) => { return null })
+    return res
+}
+
+export async function getCurrency(token: string) {
+    const baseUrl = 'https://itstep-expense-tracker.herokuapp.com/api/currencies'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    const res = await Axios.get(baseUrl, config).then((item) => { return item }).catch((err) => { return null })
+    return res
+}
+
+export async function setCurrency() {
+      
+  }

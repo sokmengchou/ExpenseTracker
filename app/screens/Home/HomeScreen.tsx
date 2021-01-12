@@ -11,12 +11,15 @@ import { ScrollView } from 'react-native-gesture-handler'
 import SmallCardCom from '../../components/SmallCardCom'
 import { LineChart } from "react-native-chart-kit";
 import { UserInterface } from '../../interface'
+import { Icon } from 'react-native-vector-icons/Icon'
 
 
 export interface Props {
   onAllTransaction: () => void,
   docs: any,
   account: UserInterface
+  onWalletClick: () => void,
+  onBudgetClick: () => void,
 
 }
 
@@ -61,6 +64,19 @@ export default function HomeScreen(props: Props): React.ReactElement {
         <TouchableOpacity onPress={props.onAllTransaction} style={styles.viewTransactionContainer}>
           <Text style={{ ...fontBold }}>See all transaction</Text>
         </TouchableOpacity>
+
+        <View style={[styles.viewTransactionContainer, { flexDirection: 'row' }]}>
+          <TouchableOpacity onPress={props.onWalletClick} style={[styles.featureBtn, { borderRightWidth: 0.5, borderRightColor: modules.SUB_TITLE }]}>
+            <FastImage style={styles.featureImage} source={require("../../../assets/image/wallet.png")} />
+            <Text style={{ ...fontBold }}>Wallets</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={props.onBudgetClick} style={[styles.featureBtn, { borderLeftWidth: 0.5, borderLeftColor: modules.SUB_TITLE }]}>
+            <FastImage style={styles.featureImage} source={require("../../../assets/image/budget.png")} />
+            <Text style={{ ...fontBold }}>Budgets</Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.chart}>
           <LineChart
             data={data}
@@ -76,9 +92,8 @@ export default function HomeScreen(props: Props): React.ReactElement {
             }}
             bezier
           />
-
         </View>
-        {
+        {/* {
           props.docs.length <= 0 ?
             null :
             props.docs.map((item: any) => {
@@ -88,7 +103,7 @@ export default function HomeScreen(props: Props): React.ReactElement {
                 </Text>
               )
             })
-        }
+        } */}
       </ScrollView>
     </ImageBackground>
   )
